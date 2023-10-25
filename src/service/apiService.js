@@ -3,14 +3,20 @@ import axios from 'axios';
 const API_BASE = 'http://localhost:3001/api/v1/user';
 
 export const userService = {
-    login
+    login,
+    profil,
 };
 
 async function login(email, password) {
     return await request('/login', 'POST', { email, password });
 }
 
-async function request(endpoint, method, data, token) {
+async function profil(token) {
+    return await request('/profile', 'POST', null, token);
+}
+
+
+async function request(endpoint, method, data = null, token) {
     const headers = {
         'Content-Type': 'application/json',
     };
@@ -20,13 +26,18 @@ async function request(endpoint, method, data, token) {
     }
 
     try {
-        const response = await axios({
+        const config = {
             method,
             url: `${API_BASE}${endpoint}`,
             headers,
-            data,
-        });
-
+        };
+        
+        if (data) {
+            config.data = data; 
+        }
+        
+        const response = await axios(config);
+        
         return response.data;
     } catch (error) {
         if (error.response) {

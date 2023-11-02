@@ -51,16 +51,25 @@ function DashboardPage(){
         setEditMode(false);
     };
 
+    const handleEditClose = () => {
+        setEditMode(false);
+    };
+
     return(
     <div> 
     <main className="main bg-dark">
       <div className="header">
        {editMode ? (
-                        <>
-                            <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                            <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-                            <button onClick={handleSave}>Save</button>
-                        </>
+                        <div className="edition-container">
+                            <div className="edition-input-firstname">
+                              <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                              <button onClick={handleEditClose}>Close</button>
+                            </div>
+                            <div className="edition-input-lastname">
+                              <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                              <button onClick={handleSave}>Save</button>
+                            </div>
+                        </div>
                     ) : (
                         <>
                             <h1>Welcome back<br />{profile?.firstName + " " + profile?.lastName}!</h1>

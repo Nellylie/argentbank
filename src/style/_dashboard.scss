@@ -1,5 +1,55 @@
-  
- 
+.edition-container{
+  margin-top: 10px;
+  display:flex;
+  justify-content: center;
+  gap: 10px;
+
+}
+.edition-input-firstname{
+  display:flex;
+  flex-direction:column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-top: 10px;
+}
+.edition-input-firstname input{
+  font-size: larger;
+}
+.edition-input-firstname button{
+   width:100px;
+   margin-top: 10px;
+   font-size: 1.1rem;
+   font-weight: bold;
+   margin-top: 1rem;
+   border-color: #00bc77;
+   background-color: #00bc77;
+   color: #fff;
+
+}
+
+.edition-input-lastname{
+  height:50px;
+  display:flex;
+  flex-direction:column;
+  margin-top: 10px;
+
+}
+.edition-input-lastname input{
+  font-size: larger;
+}
+
+.edition-input-lastname button{
+  width:100px;
+  margin-top: 10px;
+  font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    border-color: #00bc77;
+    background-color: #00bc77;
+    color: #fff;
+
+}
+
 .account {
   display: flex;
   justify-content: space-between;

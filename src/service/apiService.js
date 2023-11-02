@@ -5,6 +5,7 @@ const API_BASE = 'http://localhost:3001/api/v1/user';
 export const userService = {
     login,
     profil,
+    updateProfil,
 };
 
 async function login(email, password) {
@@ -15,6 +16,9 @@ async function profil(token) {
     return await request('/profile', 'POST', null, token);
 }
 
+async function updateProfil(token, firstName, lastName) {
+    return await request('/profile', 'PUT', { firstName, lastName }, token);
+}
 
 async function request(endpoint, method, data = null, token) {
     const headers = {

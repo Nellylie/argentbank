@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
-import { profilUser } from "../reduxcode/profil/profilDispatch";
-import { useEffect } from "react";
+import { profilUser, updateProfilInfos } from "../reduxcode/profil/profilDispatch";
+import { updateProfileName } from '../reduxcode/profil/actionRedux';
+import { useEffect, useState } from "react";
 import Account from "../components/Account";
 
 const listAccount = [
@@ -27,6 +28,11 @@ function DashboardPage(){
     const profile = useSelector((state) => state.profil.profilInfos);
     const token = useSelector((state) => state.authentification.token);
     const dispatch = useDispatch();
+    
+    const [editMode, setEditMode] = useState(false);
+    const [firstName, setFirstName] = useState(profile?.firstName);
+    const [lastName, setLastName] = useState(profile?.lastName);
+
     console.log("profil infos", profile);
     useEffect(() => {
         if(token) {
@@ -34,15 +40,36 @@ function DashboardPage(){
         }
     }, [token, dispatch]);
 
+
+    const handleEdit = () => {
+        setEditMode(true);
+    };
+
+    const handleSave = () => {
+        dispatch(updateProfileName(firstName, lastName));
+        dispatch(updateProfilInfos(token, firstName, lastName));
+        setEditMode(false);
+    };
+
     return(
     <div> 
     <main className="main bg-dark">
       <div className="header">
-        <h1>Welcome back<br />{profile?.firstName + " " + profile?.lastName}!</h1>
-        <button className="edit-button">Edit Name</button>
+       {editMode ? (
+                        <>
+                            <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                            <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                            <button onClick={handleSave}>Save</button>
+                        </>
+                    ) : (
+                        <>
+                            <h1>Welcome back<br />{profile?.firstName + " " + profile?.lastName}!</h1>
+                            <button className="edit-button" onClick={handleEdit}>Edit Name</button>
+                        </>
+                    )}
       </div>
       <h2 className="sr-only">Accounts</h2>
-      {listAccount.map((element) =>(<Account title= {element.title} solde = {element.solde} description = {element.description}/>)
+      {listAccount.map((element, i) =>(<Account key={i} title= {element.title} solde = {element.solde} description = {element.description}/>)
       )}
     </main>
           </div>

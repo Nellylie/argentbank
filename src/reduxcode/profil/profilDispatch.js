@@ -11,3 +11,13 @@ export const profilUser = (token) => async (dispatch)=>{
   }
 
 }
+
+export const updateProfilInfos = (token, firstName, lastName) => async (dispatch)=> {
+  try{
+    const responseProfil = await userService.updateProfil(token, firstName, lastName);
+    dispatch(profilInfosAction(responseProfil.body)); 
+    console.log('update', responseProfil);
+  }catch(e){
+    console.log(e)
+  }
+}

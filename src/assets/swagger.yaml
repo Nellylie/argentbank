@@ -1,0 +1,217 @@
+swagger: '2.0'
+info:
+  title: Bank Argent API Documentation
+  description: Proposition for Transaction's API endpoints
+  version: '1.0.0'
+  termsOfService: 'http://swagger.io/terms/'
+host: localhost:3001
+basePath: /api/v1
+schemes:
+  - http
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+paths:
+  /user/transactions:
+    get:
+      tags:
+        - User Module
+      summary: Transaction list
+      description: API for month's transactions list
+      security: 
+        - Bearer: []
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Display transaction list successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid Token
+        '500':
+          description: Internal Server Error
+
+  /user/transaction/{id}:
+    get:
+      tags:
+        - User Module
+      summary: Display a single transaction
+      description: A transaction is displayed with its ID
+      security: 
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Unique identifier of the transaction
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Specific transaction is displayed successfully
+          schema:
+            $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid ID
+        '500':
+          description: Internal Server Error
+
+  /user/transaction/{id}/type:
+    put:
+      tags:
+        - User Module
+      summary: Modify transaction type
+      description: Modify the type of a specific transaction
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Unique identifier of the transaction
+        - in: body
+          name: body
+          description: Transaction type data
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionTypeUpdate'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction type updated successfully
+        '400':
+          description: Invalid request
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+
+  /user/transaction/{id}/cancel:
+    post:
+      tags:
+        - User Module
+      summary: Submit transaction cancellation
+      description: Submit a request to the bank to cancel a specific transaction
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Unique identifier of the transaction to be cancelled
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Cancellation submitted successfully
+        '400':
+          description: Invalid request, such as if the transaction is already finalised and cannot be cancelled
+        '404':
+          description: Transaction not found, indicating there is no transaction with the given ID
+        '500':
+          description: Internal Server Error, indicating a problem with the server handling the request
+
+  /user/transaction/{id}/note:
+    put:
+      tags:
+        - User Module
+      summary: Modify a transaction's note
+      description: Modifies the note associated with a specific transaction
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Unique identifier of the transaction
+        - in: body
+          name: body
+          description: Updated note content data
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionNote'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Note updated successfully
+        '400':
+          description: Invalid request
+        '404':
+          description: Transaction or note not found
+        '500':
+          description: Internal Server Error
+
+definitions:
+
+  Transaction:
+    type: object
+    required:
+      - id
+      - amount
+      - type
+      - status
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: Unique identifier for the transaction
+      amount:
+        type: number
+        format: float
+        description: Amount of the transaction
+      type:
+        type: string
+        enum: [debit, credit]
+        description: Type of the transaction
+      status:
+        type: string
+        enum: [pending, completed, cancelled]
+        description: Current status of the transaction
+      date:
+        type: string
+        format: date-time
+        description: Date and time when the transaction occurred
+      notes:
+        type: array
+        items:
+          $ref: '#/definitions/TransactionNote'
+        description: Notes associated with the transaction
+
+  TransactionNote:
+    type: object
+    required:
+      - content
+    properties:
+      content:
+        type: string
+        description: Content of the note
+      timestamp:
+        type: string
+        format: date-time
+        description: Timestamp when the note was created or modified
+
+  TransactionTypeUpdate:
+    type: object
+    required:
+      - type
+    properties:
+      type:
+        type: string
+        enum: [debit, credit]
+        description: The new type of the transaction
+

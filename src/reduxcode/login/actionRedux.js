@@ -1,4 +1,4 @@
-import { LOGIN_FAIL, LOGIN_SUCCESS, TOKEN_KEY } from "./typeRedux";
+import { LOGIN_FAIL, LOGIN_SUCCESS, TOKEN_KEY, SIGN_OUT } from "./typeRedux";
 export const loginSuccess = (user) => ({
     type: LOGIN_SUCCESS,
     payload: user,
@@ -15,3 +15,9 @@ export const tokenKey = (token) => (
     payload: token,
     }
 )
+
+export const signOut = () => {
+    return {
+        type: SIGN_OUT
+    };
+};

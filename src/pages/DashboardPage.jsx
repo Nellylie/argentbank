@@ -28,16 +28,21 @@ function DashboardPage(){
     const profile = useSelector((state) => state.profil.profilInfos);
     const token = useSelector((state) => state.authentification.token);
     const dispatch = useDispatch();
-    
     const [editMode, setEditMode] = useState(false);
     const [firstName, setFirstName] = useState(profile?.firstName);
     const [lastName, setLastName] = useState(profile?.lastName);
+    
 
-    console.log("profil infos", profile);
     useEffect(() => {
         if(token) {
             dispatch(profilUser(token));
+            if(localStorage.getItem("remember")){
+                localStorage.setItem("user", JSON.stringify({token, profile}))
+                } else {
+                    localStorage.removeItem("user");
+                }
         }
+       
     }, [token, dispatch]);
 
 
@@ -58,21 +63,24 @@ function DashboardPage(){
     return(
     <div> 
     <main className="main bg-dark">
-      <div className="header">
+      <div className="header"><h1>Welcome back</h1>
+
        {editMode ? (
                         <div className="edition-container">
                             <div className="edition-input-firstname">
-                              <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                              <input type="text" placeholder = {profile.firstName} 
+                              value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                               <button onClick={handleEditClose}>Close</button>
                             </div>
                             <div className="edition-input-lastname">
-                              <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                              <input type="text" placeholder = {profile.lastName}
+                              value={lastName} onChange={(e) => setLastName(e.target.value)} />
                               <button onClick={handleSave}>Save</button>
                             </div>
                         </div>
                     ) : (
                         <>
-                            <h1>Welcome back<br />{profile?.firstName + " " + profile?.lastName}!</h1>
+                            <h1>{profile?.firstName + " " + profile?.lastName}!</h1>
                             <button className="edit-button" onClick={handleEdit}>Edit Name</button>
                         </>
                     )}

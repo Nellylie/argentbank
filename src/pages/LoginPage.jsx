@@ -1,24 +1,31 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUser} from "@fortawesome/free-solid-svg-icons";
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../reduxcode/login/loginDispatch';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { tokenKey } from '../reduxcode/login/actionRedux';
 
 function LoginPage(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
-    const token = useSelector((state) => state.authentification.token);
     const navigate = useNavigate();
+    const [rememberM, setRememberM]=useState(false);
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         dispatch(loginUser(email, password));
-        console.log("dashbord avant", token);
         navigate("/dashboard");
-    };
+        if(rememberM){
+            localStorage.setItem("remember", JSON.stringify(true))
+            } else {
+                localStorage.removeItem("remember");
+                localStorage.removeItem("user");
+            }
+        };
+
 
     return (
         <main className="main bg-dark">
@@ -36,7 +43,7 @@ function LoginPage(){
                         
                     </div>
                     <div className="input-remember">
-                        <input type="checkbox" id="remember-me" />
+                        <input type="checkbox" id="remember-me" value = {rememberM}  onChange={()=> setRememberM(!rememberM)}/>
                         <label htmlFor="remember-me">Remember me</label>
                     </div>
                     <button type="submit" className="sign-in-button"> Sign In</button>

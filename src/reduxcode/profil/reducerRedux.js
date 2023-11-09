@@ -19,7 +19,6 @@ export const profilReduce = (state = initialState, action) => {
                     lastName: action.payload.lastName,
                 }
             }
-
         default : return state;
     }
 }

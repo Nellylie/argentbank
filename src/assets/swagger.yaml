@@ -1,217 +1,401 @@
 swagger: '2.0'
 info:
-  title: Bank Argent API Documentation
-  description: Proposition for Transaction's API endpoints
+  title: Bank Argent API documentation
+  description: Contains all available API endpoints in this codebase
   version: '1.0.0'
   termsOfService: 'http://swagger.io/terms/'
 host: localhost:3001
 basePath: /api/v1
 schemes:
   - http
-securityDefinitions:
-  Bearer:
-    type: apiKey
-    name: Authorization
-    in: header
 paths:
-  /user/transactions:
-    get:
-      tags:
-        - User Module
-      summary: Transaction list
-      description: API for month's transactions list
-      security: 
-        - Bearer: []
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Display transaction list successfully
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Transaction'
-        '400':
-          description: Invalid Token
-        '500':
-          description: Internal Server Error
-
-  /user/transaction/{id}:
-    get:
-      tags:
-        - User Module
-      summary: Display a single transaction
-      description: A transaction is displayed with its ID
-      security: 
-        - Bearer: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          type: integer
-          format: int64
-          description: Unique identifier of the transaction
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Specific transaction is displayed successfully
-          schema:
-            $ref: '#/definitions/Transaction'
-        '400':
-          description: Invalid ID
-        '500':
-          description: Internal Server Error
-
-  /user/transaction/{id}/type:
-    put:
-      tags:
-        - User Module
-      summary: Modify transaction type
-      description: Modify the type of a specific transaction
-      security:
-        - Bearer: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          type: integer
-          format: int64
-          description: Unique identifier of the transaction
-        - in: body
-          name: body
-          description: Transaction type data
-          required: true
-          schema:
-            $ref: '#/definitions/TransactionTypeUpdate'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Transaction type updated successfully
-        '400':
-          description: Invalid request
-        '404':
-          description: Transaction not found
-        '500':
-          description: Internal Server Error
-
-  /user/transaction/{id}/cancel:
+  /user/login:
     post:
       tags:
         - User Module
-      summary: Submit transaction cancellation
-      description: Submit a request to the bank to cancel a specific transaction
-      security:
-        - Bearer: []
+      summary: Login
+      description: API for Login
       parameters:
-        - name: id
-          in: path
-          required: true
-          type: integer
-          format: int64
-          description: Unique identifier of the transaction to be cancelled
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Cancellation submitted successfully
-        '400':
-          description: Invalid request, such as if the transaction is already finalised and cannot be cancelled
-        '404':
-          description: Transaction not found, indicating there is no transaction with the given ID
-        '500':
-          description: Internal Server Error, indicating a problem with the server handling the request
-
-  /user/transaction/{id}/note:
-    put:
-      tags:
-        - User Module
-      summary: Modify a transaction's note
-      description: Modifies the note associated with a specific transaction
-      security:
-        - Bearer: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          type: integer
-          format: int64
-          description: Unique identifier of the transaction
         - in: body
           name: body
-          description: Updated note content data
+          description: Login Payload
           required: true
           schema:
-            $ref: '#/definitions/TransactionNote'
+            $ref: '#/definitions/Login'
       produces:
         - application/json
       responses:
         '200':
-          description: Note updated successfully
+          description: Login Successfully
+          schema:
+            $ref: '#/definitions/LoginResponse'
         '400':
-          description: Invalid request
-        '404':
-          description: Transaction or note not found
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/signup:
+    post:
+      tags:
+        - User Module
+      summary: Signup
+      description: API for Signup
+      parameters:
+        - in: body
+          name: body
+          description: Signup Payload
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Signup Successfully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/profile:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for fetching a user profile
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          type: string
+          required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User profile retrieved successully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for updating a user profile
+      parameters:
+        - in: header
+          type: string
+          name: Authorization
+        - in: body
+          name: body
+          description: Update user profile attributes
+          required: true
+          schema:
+            $ref: '#/definitions/UserProfile'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User profile retrieved successully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
         '500':
           description: Internal Server Error
 
-definitions:
 
-  Transaction:
+# transaction's endpoint
+
+  /user/{userId}/accounts:
+      get:
+        tags:
+          - Accounts Module
+        summary: Account Types List
+        description: API for retrieving a list of account types
+        security:
+        - Bearer: []
+        parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: The unique identifier for the user
+        produces:
+          - application/json
+        responses:
+          '200':
+            description: Successfully retrieved account types
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/AccountType'
+          '400':
+            description: Invalid request
+          '500':
+            description: Internal Server Error
+
+  /user/{userId}/transactions/monthly:
+      get:
+        tags:
+          - Transaction Module
+        summary: Monthly Transactions List
+        description: API for retrieving a list of transactions for the current month
+        security:
+          - Bearer: []
+        parameters:
+          - name: userId
+            in: path
+            required: true
+            type: string
+            description: The unique identifier for the user
+        produces:
+          - application/json
+        responses:
+          '200':
+            description: Successfully retrieved monthly transactions
+            schema:
+              $ref: '#/definitions/MonthlyTransaction'
+          '400':
+            description: Invalid request
+          '500':
+            description: Internal Server Error
+  /user/{userId}/transaction/{transactionId}:
+    get:
+      tags:
+        - Transaction Detail Module
+      summary: Transaction Details
+      description: API for retrieving the details of a specific transaction
+      security:
+        - Bearer: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+        - name: transactionId
+          in: path
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successfully retrieved transaction details
+          schema:
+            $ref: '#/definitions/TransactionDetails'
+        '400':
+          description: Invalid request
+        '500':
+          description: Internal Server Error
+
+  /user/{userId}/transaction/{transactionId}/update:
+      put:
+        tags:
+          - Transaction Detail Module
+        summary: Update Transaction Details
+        description: API for updating category and note of a specific transaction
+        security:
+          - Bearer: []
+        parameters:
+          - name: userId
+            in: path
+            required: true
+            type: string
+          - name: transactionId
+            in: path
+            required: true
+            type: string
+          - in: body
+            name: body
+            description: New category and note for the transaction
+            required: true
+            schema:
+              $ref: '#/definitions/TransactionUpdate'
+        produces:
+          - application/json
+        responses:
+          '200':
+            description: Transaction details updated successfully
+            schema:
+              $ref: '#/definitions/TransactionUpdateResponse'
+          '400':
+            description: Invalid request
+          '500':
+            description: Internal Server Error
+
+  /user/{userId}/transaction/{transactionId}/note/delete:
+    delete:
+      tags:
+        - Transaction Detail Module
+      summary: Delete Transaction Note
+      description: API for deleting the note of a specific transaction
+      security:
+        - Bearer: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+        - name: transactionId
+          in: path
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction note deleted successfully
+        '400':
+          description: Invalid request or transaction
+        '500':
+          description: Internal Server Error
+          
+#definition's references
+definitions:
+  User:
+    properties:
+      email:
+        type: string
+        description: user email
+      password:
+        type: string
+        description: user password
+      firstName:
+        type: string
+        description: user first name
+      lastName:
+        type: string
+        description: user last name
+  Login:
+    properties:
+      email:
+        type: string
+        description: user email
+      password:
+        type: string
+        description: user password
+  ApiResponse:
     type: object
-    required:
-      - id
-      - amount
-      - type
-      - status
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          id:
+            type: string
+          email:
+            type: string
+  LoginResponse:
+    type: object
+    properties:
+      token:
+        type: string
+  UserProfile:
+    type: object
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+
+  AccountType:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier for the account type
+        name:
+          type: string
+          description: Name of the account type
+        description:
+          type: string
+          description: Description of the account type
+
+  MonthlyTransaction:
+    type: object
     properties:
       id:
-        type: integer
-        format: int64
-        description: Unique identifier for the transaction
-      amount:
-        type: number
-        format: float
-        description: Amount of the transaction
-      type:
         type: string
-        enum: [debit, credit]
-        description: Type of the transaction
-      status:
-        type: string
-        enum: [pending, completed, cancelled]
-        description: Current status of the transaction
+        description: Unique identifier of the transaction
       date:
         type: string
         format: date-time
-        description: Date and time when the transaction occurred
-      notes:
-        type: array
-        items:
-          $ref: '#/definitions/TransactionNote'
-        description: Notes associated with the transaction
-
-  TransactionNote:
-    type: object
-    required:
-      - content
-    properties:
-      content:
+        description: Date and time of the transaction
+      description:
         type: string
-        description: Content of the note
-      timestamp:
+        description: Description of the transaction
+      amount:
+        type: number
+        format: float
+        description: Amount involved in the transaction
+      category:
         type: string
-        format: date-time
-        description: Timestamp when the note was created or modified
-
-  TransactionTypeUpdate:
+        description: Category of the transaction
+      note:
+        type: string
+        description: Optional note associated with the transaction
+  
+  TransactionDetails:
     type: object
-    required:
-      - type
     properties:
+      transactionId:
+        type: string
+        description: Unique identifier of the transaction
       type:
         type: string
-        enum: [debit, credit]
-        description: The new type of the transaction
+        description: Type of the transaction (e.g., debit, credit)
+      category:
+        type: string
+        description: Category of the transaction
+      amount:
+        type: number
+        format: float
+        description: Amount involved in the transaction
+      date:
+        type: string
+        format: date-time
+        description: Date and time of the transaction
+      note:
+        type: string
+        description: Optional note associated with the transaction
 
+  TransactionUpdate:
+      type: object
+      required:
+        - category
+        - note
+      properties:
+        category:
+          type: string
+          description: New category of the transaction
+        note:
+          type: string
+          description: New note associated with the transaction
+
+  TransactionUpdateResponse:
+    type: object
+    properties:
+      message:
+        type: string
+        description: A message confirming the successful update
+      updatedTransaction:
+        type: object
+        properties:
+          transactionId:
+            type: string
+          category:
+            type: string
+          note:
+            type: string

@@ -43,7 +43,7 @@ function DashboardPage(){
                 }
         }
        
-    }, [token, dispatch]);
+    }, [token, dispatch, profile]);
 
 
     const handleEdit = () => {

@@ -29,6 +29,10 @@
     margin-right: 0.5rem;
     font-weight: bold;
     color: #2c3e50;
+    cursor: pointer;
+    display:flex;
+    flex-direction: row;
+    gap:5px;
   }
   
   .main-nav-item:hover {

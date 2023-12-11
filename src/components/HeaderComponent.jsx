@@ -1,7 +1,7 @@
 import logo from "../assets/argentBankLogo.png";
 import {Link, useNavigate} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import { faCircleUser, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { signOut } from '../reduxcode/login/actionRedux'; 
 import { useSelector, useDispatch } from "react-redux";
 import { loginSuccess } from "../reduxcode/login/actionRedux";
@@ -20,8 +20,7 @@ function HeaderComponent() {
         dispatch(loginSuccess(user))
         }
 
-
-    })
+    },[dispatch])
     const handleSignOut = () => {
         dispatch(signOut()); 
         localStorage.removeItem("user");
@@ -38,12 +37,14 @@ function HeaderComponent() {
                 <h1 className="sr-only">Argent Bank</h1>
             </Link>
             <div className="main-nav-login-container">
-                {isLoggedIn ? (
+                {isLoggedIn? (
                     <>
-                    <div className="main-nav-item">{profile?.firstName}</div>
-                    <FontAwesomeIcon onClick = {() => navigation()} icon={faCircleUser} />
+                    <div onClick = {() => navigation()} className="main-nav-item">
+                    <FontAwesomeIcon icon={faCircleUser} />
+                    {profile?.firstName} 
+                   </div>
                     <div onClick={handleSignOut} className="main-nav-item">
-                        Sign Out
+                    <FontAwesomeIcon icon={faRightFromBracket}/> Sign Out
                     </div>
                     </>
                 ) : (

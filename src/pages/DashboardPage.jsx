@@ -69,12 +69,12 @@ function DashboardPage(){
                         <div className="edition-container">
                             <div className="edition-input-firstname">
                               <input type="text" placeholder = {profile.firstName} 
-                              value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                              value={firstName} onChange={(e) => setFirstName(e.target.value || profile.lastName)} />
                               <button onClick={handleEditClose}>Close</button>
                             </div>
                             <div className="edition-input-lastname">
                               <input type="text" placeholder = {profile.lastName}
-                              value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                              value={lastName} onChange={(e) => setLastName(e.target.value || profile.lastName)} />
                               <button onClick={handleSave}>Save</button>
                             </div>
                         </div>

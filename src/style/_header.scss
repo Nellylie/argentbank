@@ -3,7 +3,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 20px;
+    padding: 5px;
+    width:98%;
     max-height:50px;
   }
   
@@ -17,9 +18,10 @@
   }
   .main-nav-login-container{
     display:flex;
-    justify-content: row;
+    flex-direction: row;
+    justify-content: flex-start;
     gap:10px;
-    width: 100px;
+    width: fit-content;
     white-space: nowrap;
   }
   .main-nav-item {

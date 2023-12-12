@@ -46,7 +46,6 @@ async function request(endpoint, method, data = null, token) {
         }
         
         const response = await axios(config);
-        
         return response.data;
     } catch (error) {
         console.log(error);

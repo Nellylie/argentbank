@@ -62,7 +62,7 @@ function DashboardPage() {
             }
         }
 
-    }, [token, dispatch, profile]);
+    }, [token, dispatch]);
 
     const handleSave = () => {
         if (!validateUpdateInfos(firstName) || !validateUpdateInfos(lastName)){

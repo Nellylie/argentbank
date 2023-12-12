@@ -1,6 +1,6 @@
-import iconeChat from "../assets/icon-chat.png"
-import iconeSecurity from "../assets/icon-security.png"
-import iconeMoney from "../assets/icon-money.png"
+import iconeChat from "../../assets/icon-chat.png"
+import iconeSecurity from "../../assets/icon-security.png"
+import iconeMoney from "../../assets/icon-money.png"
 
 function HomePage(){
 

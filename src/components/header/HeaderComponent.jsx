@@ -1,10 +1,10 @@
-import logo from "../assets/argentBankLogo.png";
+import logo from "../../assets/argentBankLogo.png";
 import {Link, useNavigate} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUser, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import { signOut } from '../reduxcode/global/actionRedux'; 
+import { signOut } from '../../reduxcode/global/actionRedux'; 
 import { useSelector, useDispatch } from "react-redux";
-import { loginSuccess } from "../reduxcode/global/actionRedux";
+import { loginSuccess } from "../../reduxcode/global/actionRedux";
 import { useEffect } from "react";
 
 function HeaderComponent() {

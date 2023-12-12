@@ -1,15 +1,15 @@
 import { Routes, Route } from "react-router-dom";
-import HomePage from "../pages/HomePage";
-import DashboardPage from "../pages/DashboardPage";
-import LoginPage from "../pages/LoginPage";
-import HeaderComponent from "../components/HeaderComponent";
-import FooterComponent from "../components/FooterComponent";
+import HomePage from "../pages/home/HomePage";
+import DashboardPage from "../pages/dashboard/DashboardPage";
+import LoginPage from "../pages/login/LoginPage";
+import HeaderComponent from "../components/header/HeaderComponent";
+import FooterComponent from "../components/footer/FooterComponent";
 import SecureRoute from "./SecureRoute";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import Modal from "../components/Modal";
+import Modal from "../components/modal/Modal";
 import { clearError } from "../reduxcode/global/actionRedux";
-import LoaderAnime from "../components/LoaderAnime";
+import LoaderAnime from "../components/loader/LoaderAnime";
 
 function RoutesSection() {
     const errorMessage = useSelector((state) => state.authentification.error);

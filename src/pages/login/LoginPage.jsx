@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUser} from "@fortawesome/free-solid-svg-icons";
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../reduxcode/global/loginDispatch';
+import { loginUser } from '../../reduxcode/global/loginDispatch';
 import { useNavigate } from 'react-router-dom';
 
 function LoginPage(){

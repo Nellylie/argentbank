@@ -1,9 +1,9 @@
 @import "utils";
 @import "global";
-@import "dashboard";
-@import "home";
-@import "login";
-@import "footer";
-@import "header";
-@import "modal";
-@import "loader";
+@import "../pages/dashboard/dashboard";
+@import "../pages/home/home";
+@import "../pages/login/login";
+@import "../components/footer/footer";
+@import "../components/header/header";
+@import "../components/modal/modal";
+@import "../components/loader/loader";

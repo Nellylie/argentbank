@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
-import { profilUser, updateProfilInfos } from "../reduxcode/profil/profilDispatch";
-import { updateProfileName } from '../reduxcode/profil/actionRedux';
+import { profilUser, updateProfilInfos } from "../../reduxcode/profil/profilDispatch";
+import { updateProfileName } from '../../reduxcode/profil/actionRedux';
 import { useEffect, useState } from "react";
-import Account from "../components/Account";
+import Account from "../../components/account/Account";
 const listAccount = [
     {
         title: "Argent Bank Checking (x8349)",

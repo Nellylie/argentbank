@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import LoginPage from '../pages/LoginPage';
+import LoginPage from '../pages/login/LoginPage';
 
 function SecureRoute({ children }) {
     const token = useSelector((state) => state.authentification.token);

@@ -1,5 +1,10 @@
 import axios from 'axios';
 
+export const errorMessages = {
+    response400: 'Invalid Fields',
+    response500: 'Internal Server Error'
+};
+
 const API_BASE = 'http://localhost:3001/api/v1/user';
 
 export const userService = {
@@ -44,12 +49,11 @@ async function request(endpoint, method, data = null, token) {
         
         return response.data;
     } catch (error) {
-        if (error.response) {
-            throw new Error(error.response.data.error);
-        } else if (error.request) {
-            throw new Error('No response received from the server.');
+        console.log(error);
+        if (error.response?.status === 400) {
+            throw new Error(errorMessages.response400);
         } else {
-            throw new Error(error.message);
+            throw new Error(errorMessages.response500);
         }
-    }
+    } 
 }

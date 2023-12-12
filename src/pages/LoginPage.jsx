@@ -1,18 +1,17 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUser} from "@fortawesome/free-solid-svg-icons";
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../reduxcode/login/loginDispatch';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../reduxcode/global/loginDispatch';
 import { useNavigate } from 'react-router-dom';
-import { tokenKey } from '../reduxcode/login/actionRedux';
 
 function LoginPage(){
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [rememberM, setRememberM]=useState(false);
-    
 
     const handleSubmit = async (e) => {
         e.preventDefault();

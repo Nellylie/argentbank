@@ -1,23 +1,22 @@
 import { userService } from "../../service/apiService";
 import { profilInfosAction } from "./actionRedux";
-import { loginFail } from "../login/actionRedux";
+import { loginFail } from "../global/actionRedux";
 
-export const profilUser = (token) => async (dispatch)=>{
-  try{
+export const profilUser = (token) => async (dispatch) => {
+  try {
     const responseProfil = await userService.profil(token);
     dispatch(profilInfosAction(responseProfil.body));
-    console.log(responseProfil);
-  }catch(e){
-    dispatch(loginFail(e.message));
+  } catch (e) {
+    dispatch(loginFail("An error occurred while loading the profile. Please try again."));
+  } finally{
   }
+};
 
-}
-
-export const updateProfilInfos = (token, firstName, lastName) => async (dispatch)=> {
-  try{
+export const updateProfilInfos = (token, firstName, lastName) => async (dispatch) => {
+  try {
     const responseProfil = await userService.updateProfil(token, firstName, lastName);
-    dispatch(profilInfosAction(responseProfil.body)); 
-  }catch(e){
-    dispatch(loginFail(e.message));
+    dispatch(profilInfosAction(responseProfil.body));
+  } catch (e) {
+    dispatch(loginFail("An error occurred while updating the profile. Please try again."));
   }
-}
+};

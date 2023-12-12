@@ -3,52 +3,64 @@ import { profilUser, updateProfilInfos } from "../reduxcode/profil/profilDispatc
 import { updateProfileName } from '../reduxcode/profil/actionRedux';
 import { useEffect, useState } from "react";
 import Account from "../components/Account";
-
 const listAccount = [
-  {
-  title:"Argent Bank Checking (x8349)",
-  solde:"$2,082.79",
-  description:"Available Balance"
-  },
-  {
-  title:"Argent Bank Savings (x6712)",
-  solde:"$10,928.42",
-  description:"Available Balance"
-  },
-  {
-  title:"Argent Bank Credit Card (x8349)",
-  solde:"$184.30",
-  description:"Current Balance"
-  }
+    {
+        title: "Argent Bank Checking (x8349)",
+        solde: "$2,082.79",
+        description: "Available Balance"
+    },
+    {
+        title: "Argent Bank Savings (x6712)",
+        solde: "$10,928.42",
+        description: "Available Balance"
+    },
+    {
+        title: "Argent Bank Credit Card (x8349)",
+        solde: "$184.30",
+        description: "Current Balance"
+    }
 ]
 
 
 
-function DashboardPage(){
+function DashboardPage() {
     const profile = useSelector((state) => state.profil.profilInfos);
     const token = useSelector((state) => state.authentification.token);
     const dispatch = useDispatch();
     const [editMode, setEditMode] = useState(false);
-    const [firstName, setFirstName] = useState(profile?.firstName);
-    const [lastName, setLastName] = useState(profile?.lastName);
-    
+
+    const [firstName, setFirstName] = useState(profile?.firstName || "");
+    const [lastName, setLastName] = useState(profile?.lastName || "");
+
 
     useEffect(() => {
-        if(token) {
-            dispatch(profilUser(token));
-            if(localStorage.getItem("remember")){
-                localStorage.setItem("user", JSON.stringify({token, profile}))
-                } else {
-                    localStorage.removeItem("user");
-                }
+        if (profile) {
+            if (firstName === null) setFirstName(profile.firstName);
+            if (lastName === null) setLastName(profile.lastName);
         }
-       
-    }, [token, dispatch, profile]);
-
+    }, [profile]);
 
     const handleEdit = () => {
+        if (firstName === "" && profile) {
+            setFirstName(profile.firstName);
+        }
+        if (lastName === "" && profile) {
+            setLastName(profile.lastName);
+        }
         setEditMode(true);
     };
+
+    useEffect(() => {
+        if (token) {
+            dispatch(profilUser(token));
+            if (localStorage.getItem("remember")) {
+                localStorage.setItem("user", JSON.stringify({ token, profile }))
+            } else {
+                localStorage.removeItem("user");
+            }
+        }
+
+    }, [token, dispatch, profile]);
 
     const handleSave = () => {
         dispatch(updateProfileName(firstName, lastName));
@@ -60,22 +72,22 @@ function DashboardPage(){
         setEditMode(false);
     };
 
-    return(
-    <div> 
-    <main className="main bg-dark">
-      <div className="header"><h1>Welcome back</h1>
+    return (
+        <div>
+            <main className="main bg-dark">
+                <div className="header"><h1>Welcome back</h1>
 
-       {editMode ? (
+                    {editMode ? (
                         <div className="edition-container">
                             <div className="edition-input-firstname">
-                              <input type="text" placeholder = {profile.firstName} 
-                              value={firstName} onChange={(e) => setFirstName(e.target.value || profile.lastName)} />
-                              <button onClick={handleEditClose}>Close</button>
+                                <input type="text" placeholder={profile.firstName}
+                                    value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                                <button onClick={handleEditClose}>Close</button>
                             </div>
                             <div className="edition-input-lastname">
-                              <input type="text" placeholder = {profile.lastName}
-                              value={lastName} onChange={(e) => setLastName(e.target.value || profile.lastName)} />
-                              <button onClick={handleSave}>Save</button>
+                                <input type="text" placeholder={profile.lastName}
+                                    value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                                <button onClick={handleSave}>Save</button>
                             </div>
                         </div>
                     ) : (
@@ -84,13 +96,13 @@ function DashboardPage(){
                             <button className="edit-button" onClick={handleEdit}>Edit Name</button>
                         </>
                     )}
-      </div>
-      <h2 className="sr-only">Accounts</h2>
-      {listAccount.map((element, i) =>(<Account key={i} title= {element.title} solde = {element.solde} description = {element.description}/>)
-      )}
-    </main>
-          </div>
-          )
+                </div>
+                <h2 className="sr-only">Accounts</h2>
+                {listAccount.map((element, i) => (<Account key={i} title={element.title} solde={element.solde} description={element.description} />)
+                )}
+            </main>
+        </div>
+    )
 }
 
 export default DashboardPage;

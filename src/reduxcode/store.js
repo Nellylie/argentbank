@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import {authentificationReduce} from './login/reducerRedux';
+import {authentificationReduce} from './global/reducerRedux';
 import { profilReduce } from './profil/reducerRedux';
 
 const rootReducer = combineReducers({

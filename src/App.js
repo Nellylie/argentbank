@@ -3,7 +3,7 @@ import './style/main.scss';
 import RoutesSection from './routessection/RoutesSection';
 import { useDispatch } from 'react-redux';
 import {useEffect} from 'react';
-import { tokenKey } from './reduxcode/login/actionRedux'
+import { tokenKey } from './reduxcode/global/actionRedux'
 import { profilUser } from './reduxcode/profil/profilDispatch';
 
 function App() {

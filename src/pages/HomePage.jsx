@@ -2,9 +2,10 @@ import iconeChat from "../assets/icon-chat.png"
 import iconeSecurity from "../assets/icon-security.png"
 import iconeMoney from "../assets/icon-money.png"
 
-
 function HomePage(){
-    return(<main>
+
+
+      return(<main>
       <div className="hero">
         <section className="hero-content">
           <h2 className="sr-only">Promoted Content</h2>

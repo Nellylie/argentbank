@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../reduxcode/global/loginDispatch';
 import { useNavigate } from 'react-router-dom';
+import { validateEmail, validatePassword } from '../../utils/regexValidation';
+import { loginFail } from '../../reduxcode/global/actionRedux';
 
 function LoginPage(){
 
@@ -15,6 +17,14 @@ function LoginPage(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!validateEmail(email)) {
+            dispatch(loginFail("Please enter a valid email address."));
+            return;
+        }
+        if (!validatePassword(password)) {
+            dispatch(loginFail("Password must be at least 8 characters long and include at least one number"));
+            return;
+        }
         dispatch(loginUser(email, password));
         navigate("/dashboard");
         if(rememberM){

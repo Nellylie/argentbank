@@ -1,4 +1,4 @@
-import { LOGIN_FAIL, LOGIN_SUCCESS, TOKEN_KEY, SIGN_OUT, CLEAR_ERROR, LOADING} from "./typeRedux";
+import { LOGIN_FAIL, LOGIN_SUCCESS, TOKEN_KEY, SIGN_OUT, CLEAR_ERROR, LOADING, UPDATE_ERROR} from "./typeRedux";
 export const loginSuccess = (user) => ({
     type: LOGIN_SUCCESS,
     payload: user,
@@ -33,4 +33,11 @@ export const loading =(isLoading)=>{
         type: LOADING,
         payload: isLoading
     };
+}
+
+export const updateError=(error)=>{
+    return{
+        type: UPDATE_ERROR,
+        payload: error
+    }
 }

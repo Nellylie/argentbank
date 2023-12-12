@@ -3,6 +3,8 @@ import { profilUser, updateProfilInfos } from "../../reduxcode/profil/profilDisp
 import { updateProfileName } from '../../reduxcode/profil/actionRedux';
 import { useEffect, useState } from "react";
 import Account from "../../components/account/Account";
+import { validateUpdateInfos } from "../../utils/regexValidation";
+import { clearError, updateError } from "../../reduxcode/global/actionRedux";
 const listAccount = [
     {
         title: "Argent Bank Checking (x8349)",
@@ -63,10 +65,16 @@ function DashboardPage() {
     }, [token, dispatch, profile]);
 
     const handleSave = () => {
-        dispatch(updateProfileName(firstName, lastName));
-        dispatch(updateProfilInfos(token, firstName, lastName));
-        setEditMode(false);
+        if (!validateUpdateInfos(firstName) || !validateUpdateInfos(lastName)){
+            dispatch(updateError("Enter a valid value"));
+        } else {
+            dispatch(clearError());
+            dispatch(updateProfileName(firstName, lastName));
+            dispatch(updateProfilInfos(token, firstName, lastName));
+            setEditMode(false);
+        }
     };
+    
 
     const handleEditClose = () => {
         setEditMode(false);

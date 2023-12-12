@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, LOGIN_FAIL, TOKEN_KEY, SIGN_OUT, CLEAR_ERROR, LOADING } from "./typeRedux"
+import { LOGIN_SUCCESS, LOGIN_FAIL, TOKEN_KEY, SIGN_OUT, CLEAR_ERROR, LOADING, UPDATE_ERROR } from "./typeRedux"
 
 const initialState = {
     user: null,
@@ -32,6 +32,13 @@ export const authentificationReduce = (state = initialState, action) => {
               ...state,
               loader: action.payload
             };
+
+        case UPDATE_ERROR:
+            return{
+                ...state,
+                error: action.payload
+            };
+
         default: return state;
 
     }

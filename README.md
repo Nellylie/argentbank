@@ -34,7 +34,7 @@ npm run populate-db
 Deux utilisateurs seront ainsi enregistrés et pourront se connecter au site.
 
 
-## Demonstration
+### Demonstration
 La démonstration a été déployée sur GitPage et se connecte si le server est lancé en local sur le port 3001:
 https://nellylie.github.io/argentbank/
 

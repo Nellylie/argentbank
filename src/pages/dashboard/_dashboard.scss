@@ -38,8 +38,9 @@
   font-size: larger;
 }
 
-.edition-input-lastname button{
+.edit-button,.edition-input-lastname button{
   width:100px;
+  white-space: nowrap;
   margin-top: 10px;
   font-size: 1.1rem;
     font-weight: bold;

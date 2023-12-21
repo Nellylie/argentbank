@@ -101,7 +101,7 @@ function DashboardPage() {
                     ) : (
                         <>
                             <h1>{profile?.firstName + " " + profile?.lastName}!</h1>
-                            <button className="edit-button" onClick={handleEdit}>Edit Name</button>
+                            <button className="edit-button" onClick={handleEdit}>Edit</button>
                         </>
                     )}
                 </div>

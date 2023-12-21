@@ -48,7 +48,6 @@ async function request(endpoint, method, data = null, token) {
         const response = await axios(config);
         return response.data;
     } catch (error) {
-        console.log(error);
         if (error.response?.status === 400) {
             throw new Error(errorMessages.response400);
         } else {

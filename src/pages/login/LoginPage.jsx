@@ -48,7 +48,7 @@ function LoginPage(){
                     </div>
                     <div className="input-wrapper">
                         <label htmlFor="password">Password</label>
-                        <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <input type="password" id="password" autoComplete="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                         
                     </div>
                     <div className="input-remember">

@@ -5,9 +5,8 @@ export const loginUser = (email, password) => async (dispatch) => {
   try {
     dispatch(loading(true));
     const response = await userService.login(email, password);
-   console.log(response.body);
     dispatch(tokenKey(response.body["token"]));
-    dispatch(loginSuccess(response.user));
+    dispatch(loginSuccess());
     dispatch(loading(false));
 
   } catch (e) {

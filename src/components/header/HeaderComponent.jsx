@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUser, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { signOut } from '../../reduxcode/global/actionRedux'; 
 import { useSelector, useDispatch } from "react-redux";
-import { loginSuccess } from "../../reduxcode/global/actionRedux";
 import { useEffect } from "react";
+import { loginSuccess } from "../../reduxcode/global/actionRedux";
 
 function HeaderComponent() {
     const dispatch = useDispatch();
@@ -16,11 +16,11 @@ function HeaderComponent() {
 
     useEffect(()=>{
         if (localStorage.getItem("user")){
-            const user = JSON.parse(localStorage.getItem("user"));
-        dispatch(loginSuccess(user))
+        dispatch(loginSuccess())
         }
 
     },[dispatch])
+    
     const handleSignOut = () => {
         dispatch(signOut()); 
         localStorage.removeItem("user");

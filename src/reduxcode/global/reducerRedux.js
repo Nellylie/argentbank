@@ -1,7 +1,6 @@
 import { LOGIN_SUCCESS, LOGIN_FAIL, TOKEN_KEY, SIGN_OUT, CLEAR_ERROR, LOADING, UPDATE_ERROR } from "./typeRedux"
 
 const initialState = {
-    user: null,
     error: null,
     token: null,
     isLoggedIn: false,
@@ -11,7 +10,7 @@ const initialState = {
 export const authentificationReduce = (state = initialState, action) => {
     switch (action.type) {
         case LOGIN_SUCCESS:
-            return { ...state, user: action.payload, error: null, isLoggedIn: true };
+            return { ...state, error: null, isLoggedIn: true };
         case LOGIN_FAIL:
             return { ...state, user: null, error: action.payload, isLoggedIn: false };
         case TOKEN_KEY:

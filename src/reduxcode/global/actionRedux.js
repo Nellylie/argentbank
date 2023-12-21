@@ -1,7 +1,7 @@
 import { LOGIN_FAIL, LOGIN_SUCCESS, TOKEN_KEY, SIGN_OUT, CLEAR_ERROR, LOADING, UPDATE_ERROR} from "./typeRedux";
-export const loginSuccess = (user) => ({
-    type: LOGIN_SUCCESS,
-    payload: user,
+
+export const loginSuccess = () => ({
+    type: LOGIN_SUCCESS
 });
 
 export const loginFail = (error) => ({

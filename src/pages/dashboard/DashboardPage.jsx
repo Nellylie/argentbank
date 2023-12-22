@@ -65,7 +65,7 @@ function DashboardPage() {
     }, [token, dispatch]);
 
     const handleSave = () => {
-        if (!validateUpdateInfos(firstName) || !validateUpdateInfos(lastName)){
+        if (!validateUpdateInfos(firstName) || !validateUpdateInfos(lastName)) {
             dispatch(updateError("Enter a valid value"));
         } else {
             dispatch(clearError());
@@ -74,7 +74,7 @@ function DashboardPage() {
             setEditMode(false);
         }
     };
-    
+
 
     const handleEditClose = () => {
         setEditMode(false);
@@ -87,15 +87,14 @@ function DashboardPage() {
 
                     {editMode ? (
                         <div className="edition-container">
-                            <div className="edition-input-firstname">
+                            <div className="edition-input">
                                 <input type="text" placeholder={profile.firstName}
                                     value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                                <button onClick={handleEditClose}>Close</button>
-                            </div>
-                            <div className="edition-input-lastname">
                                 <input type="text" placeholder={profile.lastName}
                                     value={lastName} onChange={(e) => setLastName(e.target.value)} />
-                                <button onClick={handleSave}>Save</button>
+                            </div>
+                            <div className="edition-button">
+                                <button onClick={handleSave}>Save</button><button onClick={handleEditClose}>Close</button>
                             </div>
                         </div>
                     ) : (

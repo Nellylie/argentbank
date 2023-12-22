@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import HomePage from "../pages/home/HomePage";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import LoginPage from "../pages/login/LoginPage";
+import NotFoundPage from "../components/notfoundpage/NotFoundPage";
 import HeaderComponent from "../components/header/HeaderComponent";
 import FooterComponent from "../components/footer/FooterComponent";
 import SecureRoute from "./SecureRoute";
@@ -45,6 +46,7 @@ function RoutesSection() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/dashboard" element={<SecureRoute><DashboardPage /></SecureRoute>} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/*" element={<NotFoundPage />}/>
             </Routes>
             {renderModal()}
             {renderLoader()}

@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector} from 'react-redux';
 import LoginPage from '../pages/login/LoginPage';
 
 function SecureRoute({ children }) {

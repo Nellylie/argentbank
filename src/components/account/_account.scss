@@ -4,7 +4,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid black;
+    border: 0.2px solid rgb(176, 176, 176);
     background-color: #fff;
     width: 80%;
     margin: 0 auto;
@@ -44,8 +44,8 @@
     font-size: 1.1rem;
     font-weight: bold;
     margin-top: 1rem;
-    border-color: #00bc77;
-    background-color: #00bc77;
+    border-color: none;
+    background-color: rgb(91, 66, 183);
     color: #fff;
   }
   

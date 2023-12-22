@@ -16,16 +16,20 @@ html {
   }
   .main {
     display:flex;
-    height:800px;
+    height:100%;
     flex-direction: column;
     align-content: space-between;
     flex: 1;
+    padding-bottom: 50px;
   }
   
   .bg-dark {
     background-color: #12002b;
   }
   
+  .bg-grey{
+    background-color: rgb(198, 202, 210);
+  }
   .sr-only {
     border: 0 !important;
     clip: rect(1px, 1px, 1px, 1px) !important; /* 1 */
